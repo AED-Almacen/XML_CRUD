@@ -18,6 +18,8 @@ public class Queries {
         this.dbName = "books.xml";
         this.stackOfBooks = new StackOfBooks();
         this.books = this.stackOfBooks.getBooks();
+
+        this.writeInDB();
     }
 
     private void writeInDB() {
