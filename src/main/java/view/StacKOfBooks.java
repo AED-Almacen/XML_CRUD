@@ -4,7 +4,9 @@ import javax.swing.*;
 
 public class StacKOfBooks extends JFrame {
     private JPanel window;
-    private JTable books;
+    private JScrollPane ScrollPane;
+    private JTable table;
+
 
     public StacKOfBooks() {
         super();
@@ -16,6 +18,10 @@ public class StacKOfBooks extends JFrame {
     }
 
     public JTable getTable() {
-        return this.books;
+        return this.table;
+    }
+
+    public JScrollPane getScrollPane() {
+        return ScrollPane;
     }
 }
