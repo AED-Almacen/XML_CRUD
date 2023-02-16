@@ -16,7 +16,7 @@ public class Ctrl implements ActionListener {
     private void windowConfig() {
         this.stacKOfBooks.setTitle("Stack of Books");
         this.stacKOfBooks.setLocationRelativeTo(null);
-        this.stacKOfBooks.setSize(400, 400);
+        this.stacKOfBooks.setSize(700, 450);
         this.stacKOfBooks.setVisible(true);
     }
 
@@ -41,6 +41,10 @@ public class Ctrl implements ActionListener {
         this.stacKOfBooks = new StacKOfBooks();
         this.queries = new Queries();
         windowConfig();
+
+        for (int i = 0; i < 40; i++) {
+            this.queries.createBook("test", 200);
+        }
 
         this.createTable(queries.readBooks());
     }

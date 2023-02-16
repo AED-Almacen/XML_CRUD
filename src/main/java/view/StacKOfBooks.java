@@ -6,6 +6,7 @@ public class StacKOfBooks extends JFrame {
     private JPanel window;
     private JScrollPane ScrollPane;
     private JTable table;
+    private JPanel form;
 
 
     public StacKOfBooks() {
