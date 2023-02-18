@@ -16,8 +16,6 @@ public class Queries {
     public Queries() {
         this.dbName = "books.xml";
         this.stackOfBooks = new StackOfBooks();
-
-        this.writeInDB();
     }
 
     private void writeInDB() {
@@ -53,16 +51,14 @@ public class Queries {
             unmarshaller = context.createUnmarshaller();
 
             this.stackOfBooks = (StackOfBooks) unmarshaller.unmarshal(new FileReader(this.dbName));
-
-            return this.stackOfBooks.getBooks();
         } catch (JAXBException | FileNotFoundException e) {
-            throw new RuntimeException(e);
+            this.writeInDB();
         }
+
+        return this.stackOfBooks.getBooks();
     }
 
-    public Book readBook(int id) {
-        return this.stackOfBooks.getBooks().get(id);
-    }
+    public Book readBook(int id) { return this.stackOfBooks.getBooks().get(id); }
 
     public void updateBook(int id, String name, int pages) {
         this.stackOfBooks.getBooks().get(id).setName(name);
