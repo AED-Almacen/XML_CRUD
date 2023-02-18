@@ -50,6 +50,12 @@ public class Ctrl implements ActionListener {
         this.writeInTable(queries.readBooks());
     }
 
+    private void cleanText() {
+        this.stacKOfBooks.getIdText().setText("");
+        this.stacKOfBooks.getTitleText().setText("");
+        this.stacKOfBooks.getPagesText().setText("");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.stacKOfBooks.getAddBtn()) {
@@ -68,6 +74,9 @@ public class Ctrl implements ActionListener {
                 JOptionPane.showMessageDialog(null,
                         "El número de páginas debe de ser un número");
             }
+
+            this.cleanText();
+
         } else if (e.getSource() == this.stacKOfBooks.getUpdateBtn()) {
             try {
                 int id = Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1;
@@ -87,8 +96,9 @@ public class Ctrl implements ActionListener {
                         "El id debe de ser válido. Todos los campos deben ser rellenados.");
             }
 
-        } else if (e.getSource() == this.stacKOfBooks.getDropBtn()) {
+            this.cleanText();
 
+        } else if (e.getSource() == this.stacKOfBooks.getDropBtn()) {
             try {
                 int id = Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1;
 
@@ -101,6 +111,8 @@ public class Ctrl implements ActionListener {
                 JOptionPane.showMessageDialog(null,
                         "El id debe de ser válido.");
             }
+
+            this.cleanText();
         }
     }
 }
