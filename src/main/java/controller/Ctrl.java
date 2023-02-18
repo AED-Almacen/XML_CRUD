@@ -4,10 +4,12 @@ import model.Book;
 import model.Queries;
 import view.StacKOfBooks;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Objects;
 
 public class Ctrl implements ActionListener {
     private final StacKOfBooks stacKOfBooks;
@@ -51,26 +53,54 @@ public class Ctrl implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.stacKOfBooks.getAddBtn()) {
+            try {
+                String title = this.stacKOfBooks.getTitleText().getText();
+                String pages = this.stacKOfBooks.getPagesText().getText();
 
-            //JOptionPane.showMessageDialog(null,"addBtn");
-
-            this.queries.createBook(this.stacKOfBooks.getTitleText().getText(),
-                    Integer.parseInt(this.stacKOfBooks.getPagesText().getText()));
-
-            this.writeInTable(queries.readBooks());
-
+                if (Objects.equals(title, "") || Objects.equals(pages, "")) {
+                    JOptionPane.showMessageDialog(null,
+                            "Debe rellenar el título y el número de páginas");
+                } else {
+                    this.queries.createBook(title, Integer.parseInt(pages));
+                    this.writeInTable(queries.readBooks());
+                }
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null,
+                        "El número de páginas debe de ser un número");
+            }
         } else if (e.getSource() == this.stacKOfBooks.getUpdateBtn()) {
+            try {
+                int id = Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1;
+                String title = this.stacKOfBooks.getTitleText().getText();
+                String pages = this.stacKOfBooks.getPagesText().getText();
 
-            this.queries.updateBook(Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1,
-                    this.stacKOfBooks.getTitleText().getText(),
-                    Integer.parseInt(this.stacKOfBooks.getPagesText().getText()));
+                if ((Objects.equals(title, "") || Objects.equals(pages, ""))) {
+                    JOptionPane.showMessageDialog(null,
+                            "Debe rellenar el título y el número de páginas");
+                } else if (queries.readBook(id).getId() == id + 1) {
+                    this.queries.updateBook(id, title, Integer.parseInt(pages));
+                }
 
-            this.writeInTable(queries.readBooks());
+                this.writeInTable(queries.readBooks());
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null,
+                        "El id debe de ser válido. Todos los campos deben ser rellenados.");
+            }
 
         } else if (e.getSource() == this.stacKOfBooks.getDropBtn()) {
 
-            this.queries.deleteBook(Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1);
-            this.writeInTable(queries.readBooks());
+            try {
+                int id = Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1;
+
+                if (queries.readBook(id).getId() == id + 1) {
+                    this.queries.deleteBook(id);
+                }
+
+                this.writeInTable(queries.readBooks());
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null,
+                        "El id debe de ser válido.");
+            }
         }
     }
 }
