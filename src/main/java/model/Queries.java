@@ -12,12 +12,10 @@ import java.util.List;
 public class Queries {
     private final String dbName;
     private StackOfBooks stackOfBooks;
-    private final List<Book> books;
 
     public Queries() {
         this.dbName = "books.xml";
         this.stackOfBooks = new StackOfBooks();
-        this.books = this.stackOfBooks.getBooks();
 
         this.writeInDB();
     }
@@ -40,10 +38,10 @@ public class Queries {
     }
 
     public void createBook(String name, int pages) {
-        this.books.add(new Book(this.books.size() + 1, name, pages));
-        this.stackOfBooks.setNumberOfBooks(this.books.size());
+        this.stackOfBooks.getBooks().add(new Book(this.stackOfBooks.getBooks().size() + 1, name, pages));
+        this.stackOfBooks.setNumberOfBooks(this.stackOfBooks.getBooks().size());
 
-        writeInDB();
+        this.writeInDB();
     }
 
     public List<Book> readBooks() {
@@ -63,20 +61,20 @@ public class Queries {
     }
 
     public Book readBook(int id) {
-        return this.books.get(id);
+        return this.stackOfBooks.getBooks().get(id);
     }
 
     public void updateBook(int id, String name, int pages) {
-        this.books.get(id).setName(name);
-        this.books.get(id).setPages(pages);
+        this.stackOfBooks.getBooks().get(id).setName(name);
+        this.stackOfBooks.getBooks().get(id).setPages(pages);
 
-        writeInDB();
+        this.writeInDB();
     }
 
     public void deleteBook(int id) {
-        this.books.remove(id);
-        this.stackOfBooks.setNumberOfBooks(this.books.size());
+        this.stackOfBooks.getBooks().remove(id);
+        this.stackOfBooks.setNumberOfBooks(this.stackOfBooks.getBooks().size());
 
-        writeInDB();
+        this.writeInDB();
     }
 }
