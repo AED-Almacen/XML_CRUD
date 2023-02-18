@@ -20,7 +20,7 @@ public class Ctrl implements ActionListener {
         this.stacKOfBooks.setVisible(true);
     }
 
-    private void createTable(List<Book> books) {
+    private void writeInTable(List<Book> books) {
         Object[][] data = new Object[books.size()][];
 
         for (int i = 0; i < books.size(); i++) {
@@ -33,7 +33,7 @@ public class Ctrl implements ActionListener {
 
         this.stacKOfBooks.getTable().setModel(new DefaultTableModel(
                 data,
-                new String[]{"Id", "Name", "Pages"}
+                new String[]{"Id", "Nombre", "Nº de páginas"}
         ));
     }
 
@@ -42,15 +42,35 @@ public class Ctrl implements ActionListener {
         this.queries = new Queries();
         windowConfig();
 
-        for (int i = 0; i < 40; i++) {
-            this.queries.createBook("test", 200);
-        }
-
-        this.createTable(queries.readBooks());
+        this.stacKOfBooks.getAddBtn().addActionListener(this);
+        this.stacKOfBooks.getUpdateBtn().addActionListener(this);
+        this.stacKOfBooks.getDropBtn().addActionListener(this);
+        this.writeInTable(queries.readBooks());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.stacKOfBooks.getAddBtn()) {
 
+            //JOptionPane.showMessageDialog(null,"addBtn");
+
+            this.queries.createBook(this.stacKOfBooks.getTitleText().getText(),
+                    Integer.parseInt(this.stacKOfBooks.getPagesText().getText()));
+
+            this.writeInTable(queries.readBooks());
+
+        } else if (e.getSource() == this.stacKOfBooks.getUpdateBtn()) {
+
+            this.queries.updateBook(Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1,
+                    this.stacKOfBooks.getTitleText().getText(),
+                    Integer.parseInt(this.stacKOfBooks.getPagesText().getText()));
+
+            this.writeInTable(queries.readBooks());
+
+        } else if (e.getSource() == this.stacKOfBooks.getDropBtn()) {
+
+            this.queries.deleteBook(Integer.parseInt(this.stacKOfBooks.getIdText().getText())-1);
+            this.writeInTable(queries.readBooks());
+        }
     }
 }
