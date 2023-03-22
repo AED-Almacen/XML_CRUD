@@ -8,10 +8,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Objects;
 
-public class Ctrl implements ActionListener {
+public class Ctrl implements ActionListener, MouseListener {
     private final StacKOfBooks stacKOfBooks;
     private final Queries queries;
 
@@ -47,6 +49,7 @@ public class Ctrl implements ActionListener {
         this.stacKOfBooks.getAddBtn().addActionListener(this);
         this.stacKOfBooks.getUpdateBtn().addActionListener(this);
         this.stacKOfBooks.getDropBtn().addActionListener(this);
+        this.stacKOfBooks.getTable().addMouseListener(this);
         this.writeInTable(queries.readBooks());
     }
 
@@ -114,5 +117,34 @@ public class Ctrl implements ActionListener {
 
             this.cleanText();
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int fila = this.stacKOfBooks.getTable().getSelectedRow();
+
+        this.stacKOfBooks.getIdText().setText(this.stacKOfBooks.getTable().getValueAt(fila, 0).toString());
+        this.stacKOfBooks.getTitleText().setText(this.stacKOfBooks.getTable().getValueAt(fila, 1).toString());
+        this.stacKOfBooks.getPagesText().setText(this.stacKOfBooks.getTable().getValueAt(fila, 2).toString());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
